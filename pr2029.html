@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PR2029: Proportional representation for the U.S. House</title>
+<meta name="description" content="A two-year, cross-organization plan to pass proportional representation in 2029.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F6F8;
+    --surface: #FFFFFF;
+    --ink: #0E1A2B;
+    --muted: #56637A;
+    --line: #D9DEE6;
+    --brand: #2438C9;
+    --brand-ink: #FFFFFF;
+    --hero-bg: #0B1526;
+    --hero-ink: #F1F4FA;
+    --hero-muted: #9FB0CC;
+    --s1: #4C6FFF;
+    --s2: #FFB020;
+    --s3: #14B8A6;
+    --s4: #F0577D;
+    --s5: #A78BFA;
+    --sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --wrap: 1120px;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B1220; --surface: #131C2E; --ink: #E8ECF4; --muted: #98A4BA;
+      --line: #24304A; --brand: #7C8CFF; --brand-ink: #0B1220;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B1220; --surface: #131C2E; --ink: #E8ECF4; --muted: #98A4BA;
+    --line: #24304A; --brand: #7C8CFF; --brand-ink: #0B1220;
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 72px); scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 1.125rem; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  a { color: var(--brand); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--s2); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3, .sans { font-family: var(--sans); }
+  h2 { font-size: clamp(1.9rem, 4vw, 2.7rem); line-height: 1.1; letter-spacing: -0.02em; font-weight: 800; margin: 0 0 20px; }
+  h3 { font-size: 1.2rem; line-height: 1.25; margin: 0 0 8px; font-weight: 600; }
+  p { margin: 0 0 1em; }
+  .lede { font-size: 1.25rem; color: var(--muted); max-width: 60ch; }
+  section { padding: 96px 0; }
+
+  /* Header */
+  .site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(11,21,38,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,.08); }
+  .site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .wordmark { font-family: var(--sans); font-weight: 800; font-size: 1.35rem; letter-spacing: -0.02em; color: var(--hero-ink); text-decoration: none; }
+  .wordmark span { color: var(--s2); }
+  nav ul { list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; }
+  nav a { font-family: var(--sans); font-size: .95rem; color: var(--hero-muted); text-decoration: none; }
+  nav a:hover { color: var(--hero-ink); }
+  @media (max-width: 720px) { nav ul { gap: 16px; } nav li:nth-child(n+4) { display: none; } }
+
+  /* Hero */
+  .hero { background: var(--hero-bg); color: var(--hero-ink); padding: 72px 0 0; overflow: hidden; }
+  .hero h1 { font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: 1; letter-spacing: -0.035em; font-weight: 800; margin: 0 0 24px; max-width: 15ch; }
+  .hero .sub { font-size: 1.3rem; color: var(--hero-muted); max-width: 46ch; margin-bottom: 44px; }
+  .clock { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; margin-bottom: 8px; }
+  .clock b { font-family: var(--sans); font-weight: 800; font-size: clamp(4.5rem, 18vw, 10rem); line-height: .95; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+  .clock span { font-family: var(--sans); font-size: clamp(1.1rem, 2.6vw, 1.6rem); color: var(--hero-muted); max-width: 16ch; line-height: 1.2; }
+ font-family: var(--sans); font-size: .9rem; color: var(--hero-muted); margin-top: 4px; }
+  .seg { display: inline-flex; background: rgba(255,255,255,.07); border-radius: 999px; padding: 4px; font-family: var(--sans); }
+  .seg button { appearance: none; border: 0; background: transparent; color: var(--hero-muted); font: inherit; font-size: .9rem; padding: 8px 16px; border-radius: 999px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--hero-ink); color: var(--hero-bg); font-weight: 600; }
+  .date-note { font-family: var(--sans); font-size: .9rem; color: var(--hero-muted); margin: 12px 0 0; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 36px 0 0; }
+  .btn { font-family: var(--sans); font-weight: 600; font-size: 1rem; text-decoration: none; padding: 13px 22px; border-radius: 10px; display: inline-block; }
+  .btn-primary { background: var(--s2); color: #1a1200; }
+  .btn-ghost { color: var(--hero-ink); border: 1px solid rgba(255,255,255,.25); }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-ghost:hover { background: rgba(255,255,255,.07); }
+  .arc { margin-top: 24px; display: block; width: 100%; height: auto; }
+  .arc circle { opacity: 0; animation: seat .5s ease-out forwards; }
+  @keyframes seat { from { opacity: 0; } to { opacity: .95; } }
+  @media (prefers-reduced-motion: reduce) { .arc circle { animation: none; opacity: .95; } html { scroll-behavior: auto; } }
+
+  /* Explainer */
+  .split { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }
+  @media (max-width: 900px) { .split { grid-template-columns: 1fr; gap: 36px; } }
+  .demo { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
+  .demo .seg { background: var(--bg); margin-bottom: 8px; }
+  .demo .seg button { color: var(--muted); }
+  .demo .seg button[aria-pressed="true"] { background: var(--brand); color: var(--brand-ink); }
+  .demo svg { width: 100%; height: auto; display: block; }
+  .demo svg circle, .demo svg rect, .demo svg text { transition: transform .9s cubic-bezier(.4,0,.2,1), opacity .5s ease, fill .5s ease; }
+  @media (prefers-reduced-motion: reduce) { .demo svg circle, .demo svg rect, .demo svg text { transition: none; } }
+  .demo-caption { font-size: 1rem; color: var(--muted); min-height: 4.6em; margin: 4px 0 16px; }
+  .legend { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-family: var(--sans); }
+  .legend div { border-top: 4px solid var(--c); padding-top: 8px; }
+  .legend strong { display: block; font-size: 1.6rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .legend span { font-size: .85rem; color: var(--muted); }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-top: 64px; }
+  .facts > div { border-top: 2px solid var(--ink); padding-top: 14px; }
+  .facts p { color: var(--muted); font-size: 1.02rem; margin: 0; }
+
+  /* Path */
+  .path { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .path .cols { columns: 2 340px; column-gap: 56px; }
+  .path .cols p { break-inside: avoid; }
+
+  /* Roadmap */
+  .draft { display: inline-block; font-family: var(--sans); font-size: .85rem; background: color-mix(in srgb, var(--s2) 30%, transparent); padding: 3px 10px; border-radius: 999px; margin-bottom: 28px; }
+  .timeline { list-style: none; margin: 0; padding: 0 0 0 28px; border-left: 2px solid var(--line); max-width: 760px; }
+  .timeline li { position: relative; padding-bottom: 34px; }
+  .timeline li::before { content: ""; position: absolute; left: -37px; top: 8px; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 3px solid var(--brand); }
+  .timeline li.goal::before { background: var(--s2); border-color: var(--s2); }
+  .timeline time { font-family: var(--sans); font-weight: 600; color: var(--brand); font-size: .95rem; }
+  .timeline p { color: var(--muted); margin: 0; font-size: 1.02rem; }
+
+  /* Editorials */
+  .posts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  @media (max-width: 900px) { .posts { grid-template-columns: 1fr; } }
+  .post { border-top: 4px solid var(--c, var(--brand)); padding-top: 16px; }
+  .post .meta { font-family: var(--sans); font-size: .85rem; color: var(--muted); margin-bottom: 6px; }
+  .post h3 a { color: var(--ink); text-decoration: none; }
+  .post h3 a:hover { text-decoration: underline; }
+  .post p { color: var(--muted); font-size: 1.02rem; }
+  .elsewhere { margin-top: 64px; }
+  .elsewhere ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .elsewhere li { border-bottom: 1px solid var(--line); }
+  .elsewhere a { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; text-decoration: none; color: var(--ink); font-family: var(--sans); }
+  .elsewhere a:hover strong { text-decoration: underline; }
+  .elsewhere span { color: var(--muted); font-size: .95rem; text-align: right; }
+
+  /* Members */
+  .members { background: var(--surface); border-top: 1px solid var(--line); }
+  .logos { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-top: 32px; }
+  .logo { display: flex; align-items: center; justify-content: center; text-align: center; min-height: 104px; padding: 16px; border: 1.5px dashed var(--line); border-radius: 14px; font-family: var(--sans); font-weight: 600; color: var(--muted); text-decoration: none; }
+  .logo img { max-width: 100%; max-height: 64px; }
+  .logo.filled { border-style: solid; }
+  .logo.join { border-color: var(--brand); color: var(--brand); }
+  .logo:hover { background: var(--bg); }
+
+  /* Footer */
+  footer { background: var(--hero-bg); color: var(--hero-muted); padding: 56px 0 64px; font-family: var(--sans); font-size: .95rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: flex-start; }
+  footer a { color: var(--hero-ink); }
+  footer p { margin: 6px 0 0; max-width: 46ch; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="#top">PR<span>2029</span></a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#what">What is PR</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#writing">Writing</a></li>
+        <li><a href="#members">Coalition</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <h1>A Congress that looks like the country that elected it.</h1>
+      <p class="sub">PR2029 is a two-year effort, shared by the groups working on proportional representation, to be ready to pass it in 2029.</p>
+
+      <div class="clock" role="timer" aria-label="Days until the 121st Congress is seated">
+        <b id="cd-d">0</b>
+        <span>days until the 121st Congress is seated</span>
+      </div>
+      <p class="date-note">January 3, 2029, at noon Eastern.</p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#what">See how it works</a>
+        <a class="btn btn-ghost" href="#members">Join the coalition</a>
+      </div>
+      <svg class="arc" id="hero-arc" viewBox="0 0 1000 500" role="img" aria-label="A semicircle of 435 dots representing House seats, shared among five colors in proportion."></svg>
+    </div>
+  </div>
+
+  <!-- WHAT IS PR -->
+  <section id="what">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2>What is proportional representation?</h2>
+          <p class="lede">A system where the share of seats a group wins matches the share of votes it earns.</p>
+          <p>In most U.S. House races today, one candidate wins each district and every other vote goes unrepresented. A group with 45 percent of the vote in every district can win no seats at all.</p>
+          <p>Proportional systems elect several representatives from larger districts and divide the seats by vote share. Voters get more real choices, fewer votes are wasted, and the makeup of the chamber reflects the makeup of the electorate. And because seats follow votes, there is nothing to gain from drawing district lines to favor one side.</p>
+        </div>
+
+        <div class="demo">
+          <div class="seg" role="group" aria-label="Compare electoral systems">
+            <button type="button" data-mode="wta" aria-pressed="true">Winner-take-all districts</button>
+            <button type="button" data-mode="pr" aria-pressed="false">Proportional</button>
+          </div>
+          <svg id="demo-arc" viewBox="0 0 800 350" role="img" aria-label="100 voters in three groups, shown first split into five districts, then pooled into one five-seat district, with the resulting seats below."></svg>
+          <p class="demo-caption" id="demo-caption"></p>
+          <div class="legend" id="demo-legend"></div>
+          <p style="font-size:.85rem;color:var(--muted);margin:16px 0 0">Illustrative example with made-up numbers.</p>
+        </div>
+      </div>
+
+      <div class="facts">
+        <div>
+          <h3>Ends gerrymandering</h3>
+          <p>When seats are shared out by vote share, packing or splitting voters with clever district lines no longer changes who wins.</p>
+        </div>
+        <div>
+          <h3>Common around the world</h3>
+          <p>Most established democracies use some form of proportional representation for their national legislatures.</p>
+        </div>
+        <div>
+          <h3>Many forms, one principle</h3>
+          <p>Party lists and ranked-choice methods such as single transferable vote can both deliver proportional results.</p>
+        </div>
+        <div>
+          <h3>Compatible with the Constitution</h3>
+          <p>The Constitution leaves House election rules largely to states and Congress. It does not require single-member districts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEGAL PATH -->
+  <section class="path" id="path">
+    <div class="wrap">
+      <h2>Why 2029, and why Congress</h2>
+      <div class="cols">
+        <p>Congress has the power to set the rules for House elections. Since 1967, a federal statute has required states to elect House members from single-member districts. Because it is an ordinary law, Congress can change it by passing a new one.</p>
+        <p>The task for the next two years is to turn scattered support into a shared plan: agreed goals, model bill text, and public backing strong enough to win a vote in the first year of a new Congress.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap">
+    <div class="wrap">
+      <h2>The two-year roadmap</h2>
+      <span class="draft">Draft milestones, to be set with coalition partners</span>
+      <ol class="timeline" id="timeline"></ol>
+    </div>
+  </section>
+
+  <!-- WRITING -->
+  <section id="writing" style="padding-top:0">
+    <div class="wrap">
+      <h2>Writing and resources</h2>
+      <p class="lede" style="margin-bottom:40px">Longer arguments from the coalition, and reading worth your time from elsewhere.</p>
+      <div class="posts" id="posts"></div>
+      <div class="elsewhere">
+        <h3>Elsewhere on the web</h3>
+        <ul id="links"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMBERS -->
+  <section class="members" id="members">
+    <div class="wrap">
+      <h2>The coalition</h2>
+      <p class="lede">Organizations aligning around one plan and one date.</p>
+      <div class="logos" id="logos"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="wordmark" href="#top" style="font-size:1.2rem">PR<span>2029</span></a>
+      <p>A coalition project working toward proportional representation in the U.S. House.</p>
+    </div>
+    <div>
+      <a href="mailto:hello@pr2029.org">hello@pr2029.org</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   EDIT HERE: everything below this block renders from these lists.
+   ============================================================ */
+const MILESTONES = [
+  { when: "Fall 2026", title: "Coalition convened", text: "Partner organizations agree to work from one shared timeline." },
+  { when: "Spring 2027", title: "Shared platform", text: "Agree on the principles and the system the coalition will back." },
+  { when: "Fall 2027", title: "Model legislation", text: "Finalize bill text and identify champions in both chambers." },
+  { when: "2028", title: "Candidate and public commitments", text: "Ask campaigns to take a position ahead of the general election." },
+  { when: "November 2028", title: "Election", text: "Track pledges and build the vote count for the new Congress." },
+  { when: "January 3, 2029", title: "121st Congress is seated", text: "The bill is introduced on day one.", goal: true },
+  { when: "2029", title: "Floor vote", text: "Turn the coalition's work into a recorded vote.", goal: true }
+];
+
+const EDITORIALS = [
+  { title: "Why single-winner districts leave voters behind", by: "Author name", date: "Coming soon", text: "A short argument for why the way we count votes matters as much as how we cast them.", url: "#", color: "var(--s1)" },
+  { title: "How proportional representation would work in the House", by: "Author name", date: "Coming soon", text: "A plain-language walkthrough of what the ballot, the districts and the results would look like.", url: "#", color: "var(--s2)" },
+  { title: "Lessons from countries that already use PR", by: "Author name", date: "Coming soon", text: "What has worked, what hasn't, and what it means for American design choices.", url: "#", color: "var(--s3)" }
+];
+
+const LINKS = [
+  { title: "Link title", note: "Organization or article", url: "#" },
+  { title: "Link title", note: "Organization or article", url: "#" },
+  { title: "Link title", note: "Organization or article", url: "#" }
+];
+
+/* For a logo, add  logo: "images/name.png"  (or a data: URI) and url: "https://..." */
+const MEMBERS = [
+  { name: "Partner organization", url: "#", logo: null },
+  { name: "Partner organization", url: "#", logo: null },
+  { name: "Partner organization", url: "#", logo: null },
+  { name: "Partner organization", url: "#", logo: null },
+  { name: "Partner organization", url: "#", logo: null },
+  { name: "Partner organization", url: "#", logo: null }
+];
+
+/* ============================================================ */
+
+const $ = (s, r = document) => r.querySelector(s);
+const NS = "http://www.w3.org/2000/svg";
+const COLORS = ["var(--s1)", "var(--s2)", "var(--s3)", "var(--s4)", "var(--s5)"];
+
+/* ---------- Countdown ---------- */
+const CONGRESS_SEATED = new Date("2029-01-03T17:00:00Z"); // noon Eastern
+function tick() {
+  const days = Math.max(0, Math.floor((CONGRESS_SEATED - Date.now()) / 86400000));
+  $("#cd-d").textContent = days.toLocaleString("en-US");
+}
+tick(); setInterval(tick, 60000);
+
+/* ---------- Hemicycle geometry ---------- */
+function hemicycle(n, rows, r0, r1, cx, cy) {
+  const radii = Array.from({ length: rows }, (_, i) => r0 + (r1 - r0) * (rows === 1 ? 1 : i / (rows - 1)));
+  const sum = radii.reduce((a, b) => a + b, 0);
+  const counts = radii.map(r => Math.round(n * r / sum));
+  counts[rows - 1] += n - counts.reduce((a, b) => a + b, 0);
+  const pts = [];
+  radii.forEach((r, i) => {
+    const c = counts[i];
+    for (let k = 0; k < c; k++) {
+      const a = Math.PI * (1 - (c === 1 ? 0.5 : k / (c - 1)));
+      pts.push({ x: cx + r * Math.cos(a), y: cy - r * Math.sin(a), a });
+    }
+  });
+  pts.sort((p, q) => q.a - p.a);
+  const gap = rows > 1 ? (r1 - r0) / (rows - 1) : r1;
+  const inner = Math.PI * r0 / Math.max(1, counts[0] - 1);
+  return { pts, dot: 0.4 * Math.min(gap, inner) };
+}
+function assign(n, shares) {
+  const out = []; shares.forEach((c, i) => { for (let k = 0; k < c; k++) out.push(i); });
+  while (out.length < n) out.push(shares.length - 1);
+  return out;
+}
+
+/* ---------- Hero arc: 435 seats ---------- */
+(function () {
+  const svg = $("#hero-arc");
+  const { pts, dot } = hemicycle(435, 10, 250, 480, 500, 490);
+  const shares = [148, 117, 78, 52, 40];
+  const idx = assign(435, shares);
+  pts.forEach((p, i) => {
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", p.x.toFixed(1)); c.setAttribute("cy", p.y.toFixed(1)); c.setAttribute("r", dot.toFixed(1));
+    c.setAttribute("fill", COLORS[idx[i]]);
+    c.style.animationDelay = (i / 435 * 1100).toFixed(0) + "ms";
+    svg.appendChild(c);
+  });
+})();
+
+/* ---------- Demo: winner-take-all vs proportional ---------- */
+(function () {
+  const svg = $("#demo-arc");
+  const names = ["Group A", "Group B", "Group C"];
+  const cols = ["var(--s1)", "var(--s2)", "var(--s3)"];
+  const votes = [45, 35, 20];
+  const inDistrict = [9, 7, 4];            // 20 voters per district; A leads every district
+  const el = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; };
+  const text = (attrs, str) => { const t = el("text", Object.assign({ "font-family": "var(--sans)", fill: "var(--muted)" }, attrs)); t.textContent = str; return t; };
+  const put = (e, x, y) => { e.style.transform = "translate(" + x + "px," + y + "px)"; };
+
+  const heading = text({ x: 20, y: 24, "font-size": 19, "font-weight": 600 }, "");
+  const districtBits = [];
+  for (let d = 0; d < 5; d++) {
+    const x0 = 20 + d * 155;
+    districtBits.push(el("rect", { x: x0, y: 44, width: 140, height: 170, rx: 12, fill: "none", stroke: "var(--line)", "stroke-width": 2 }));
+    districtBits.push(text({ x: x0 + 70, y: 66, "text-anchor": "middle", "font-size": 16 }, "District " + (d + 1)));
+  }
+  const pool = el("rect", { x: 20, y: 44, width: 760, height: 170, rx: 12, fill: "none", stroke: "var(--line)", "stroke-width": 2 });
+  text({ x: 20, y: 260, "font-size": 19, "font-weight": 600 }, "Seats won");
+
+  // 100 voters: 5 districts x 20
+  const voters = [];
+  for (let d = 0; d < 5; d++) for (let i = 0; i < 20; i++) {
+    const g = i < inDistrict[0] ? 0 : i < inDistrict[0] + inDistrict[1] ? 1 : 2;
+    const c = el("circle", { r: 9, cx: 0, cy: 0 });
+    c.style.fill = cols[g];
+    voters.push({ el: c, g, n: voters.length, wta: { x: 20 + d * 155 + 22 + (i % 4) * 32, y: 96 + Math.floor(i / 4) * 26 } });
+  }
+  // pooled layout: group by color, filled column by column
+  const order = voters.map((v, i) => i).sort((a, b) => voters[a].g - voters[b].g || a - b);
+  order.forEach((vi, rank) => { voters[vi].pr = { x: 58 + Math.floor(rank / 5) * 36, y: 96 + (rank % 5) * 26 }; });
+
+  // 5 seats
+  const seats = [0, 1, 2, 3, 4].map(k => {
+    const c = el("circle", { r: 26, cx: 0, cy: 0 });
+    return { el: c, wta: { x: 20 + k * 155 + 70, y: 312, g: 0 }, pr: { x: 400 + (k - 2) * 110, y: 312, g: [0, 0, 1, 1, 2][k] } };
+  });
+
+  $("#demo-legend").innerHTML = names.map((n, i) =>
+    '<div style="--c:' + cols[i] + '"><strong id="seat-' + i + '"></strong><span>' + n + ', ' + votes[i] + '% of votes</span></div>').join("");
+
+  const copy = {
+    wta: { head: "100 voters, split into 5 districts", seats: [5, 0, 0],
+      text: "Group A leads by a few votes in every district, so it wins all 5 seats. The faded voters, 55 of 100, elected no one." },
+    pr: { head: "The same 100 voters, one shared 5-seat district", seats: [2, 2, 1],
+      text: "Seats are shared out by vote share, so each group's seats roughly match its support. Every voter helps elect someone." }
+  };
+  function show(mode) {
+    const wta = mode === "wta";
+    voters.forEach(v => {
+      const p = wta ? v.wta : v.pr;
+      put(v.el, p.x, p.y);
+      v.el.style.opacity = wta && v.g > 0 ? 0.28 : 1;
+      v.el.style.transitionDelay = (v.n % 20) * 12 + "ms";
+    });
+    seats.forEach(s => { const p = wta ? s.wta : s.pr; put(s.el, p.x, p.y); s.el.style.fill = cols[p.g]; });
+    districtBits.forEach(b => b.style.opacity = wta ? 1 : 0);
+    pool.style.opacity = wta ? 0 : 1;
+    heading.textContent = copy[mode].head;
+    copy[mode].seats.forEach((n, i) => $("#seat-" + i).textContent = n + (n === 1 ? " seat" : " seats"));
+    $("#demo-caption").textContent = copy[mode].text;
+  }
+  document.querySelectorAll("[data-mode]").forEach(btn => btn.addEventListener("click", () => {
+    document.querySelectorAll("[data-mode]").forEach(b => b.setAttribute("aria-pressed", b === btn));
+    show(btn.dataset.mode);
+  }));
+  show("wta");
+})();
+
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+$("#timeline").innerHTML = MILESTONES.map(m => `
+  <li class="${m.goal ? "goal" : ""}">
+    <time>${esc(m.when)}</time>
+    <h3>${esc(m.title)}</h3>
+    <p>${esc(m.text)}</p>
+  </li>`).join("");
+
+$("#posts").innerHTML = EDITORIALS.map(p => `
+  <article class="post" style="--c:${p.color}">
+    <div class="meta">${esc(p.by)}, ${esc(p.date)}</div>
+    <h3><a href="${esc(p.url)}">${esc(p.title)}</a></h3>
+    <p>${esc(p.text)}</p>
+  </article>`).join("");
+
+$("#links").innerHTML = LINKS.map(l => `
+  <li><a href="${esc(l.url)}" ${l.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>
+    <strong>${esc(l.title)}</strong><span>${esc(l.note)}</span></a></li>`).join("");
+
+$("#logos").innerHTML = MEMBERS.map(m => `
+  <a class="logo ${m.logo ? "filled" : ""}" href="${esc(m.url)}" ${m.url.startsWith("http") ? 'target="_blank" rel="noopener"' : ""}>
+    ${m.logo ? `<img src="${esc(m.logo)}" alt="${esc(m.name)}">` : esc(m.name)}
+  </a>`).join("") +
+  `<a class="logo join" href="mailto:hello@pr2029.org?subject=Join%20the%20PR2029%20coalition">Add your organization</a>`;
+</script>
+</body>
+</html>
